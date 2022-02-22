@@ -7,6 +7,6 @@ workflows:
     jobs:
       - docker/publish:
           dockerfile: Dockerfile
-          image: $CIRCLE_PROJECT_REPONAME
+          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
           path: .
           registry: 973955819987.dkr.ecr.us-west-1.amazonaws.com
