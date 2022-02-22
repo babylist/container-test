@@ -1,14 +1,19 @@
 version: 2.1
 orbs:
-  docker: circleci/docker@2.0.2
-
+  aws-ecr: circleci/aws-ecr@7.3.0
 workflows:
-    example-workflow:
-      jobs:
-        - docker/publish:
-            docker-username: AWS_ACCESS_KEY_ID
-            docker-password: AWS_SECRET_ACCESS_KEY
-            image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME 
-            registry: '973955819987.dkr.ecr.us-west-1.amazonaws.com' 
-            context:
-                - gruntwork-ci
+  build_and_push_image:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          region: AWS_REGION
+          context:
+            - gruntwork-ci
+          create-repo: true
+          dockerfile: Dockerfile
+          no-output-timeout: 20m
+          path: .
+          repo: 'container-test'
+      
