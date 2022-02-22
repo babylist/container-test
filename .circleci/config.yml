@@ -6,8 +6,8 @@ workflows:
     example-workflow:
       jobs:
         - docker/publish:
-            docker-username: $AWS_ACCESS_KEY_ID 
-            docker-password: $AWS_SECRET_ACCESS_KEY 
+            docker-username: AWS_ACCESS_KEY_ID
+            docker-password: AWS_SECRET_ACCESS_KEY
             image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME 
             registry: '973955819987.dkr.ecr.us-west-1.amazonaws.com' 
             context:
