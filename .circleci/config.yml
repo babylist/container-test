@@ -5,12 +5,12 @@ orbs:
 workflows:
   build-and-publish-docker-image:
     jobs:
-      - environment:
-          DOCKER_LOGIN: $AWS_ACCESS_KEY_ID
-          DOCKER_PASSWORD: $AWS_SECRET_ACCESS_KEY
       - docker/publish:
           dockerfile: Dockerfile
           image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
           path: .
           registry: 973955819987.dkr.ecr.us-west-1.amazonaws.com
           context: gruntwork-ci
+          environment:
+            DOCKER_LOGIN: $AWS_ACCESS_KEY_ID
+            DOCKER_PASSWORD: $AWS_SECRET_ACCESS_KEY
