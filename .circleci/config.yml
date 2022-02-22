@@ -2,15 +2,19 @@ version: 2.1
 orbs:
   docker: circleci/docker@2.0.2
 
+jobs:
+  build-and-publish:
+    - docker/publish:
+        dockerfile: Dockerfile
+        image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
+        path: .
+        registry: 973955819987.dkr.ecr.us-west-1.amazonaws.com
+      environment:
+        DOCKER_LOGIN: $AWS_ACCESS_KEY_ID
+        DOCKER_PASSWORD: $AWS_SECRET_ACCESS_KEY
+
 workflows:
   build-and-publish-docker-image:
     jobs:
-      - docker/publish:
-          dockerfile: Dockerfile
-          image: $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME
-          path: .
-          registry: 973955819987.dkr.ecr.us-west-1.amazonaws.com
-          context: gruntwork-ci
-          environment:
-            DOCKER_LOGIN: $AWS_ACCESS_KEY_ID
-            DOCKER_PASSWORD: $AWS_SECRET_ACCESS_KEY
+      - build-and-publish:
+        context: gruntwork-ci
